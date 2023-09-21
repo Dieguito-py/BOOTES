@@ -59,7 +59,7 @@ my_label3 = LabelFrame(root, width=892, height=592, borderwidth=0, bg='#232323')
 my_label3.pack(side=RIGHT, padx=20, pady=30)
 
 # container: TOP
-img = PhotoImage(file="C:\\Users\Diego\\Pictures\\Ativo 1mdpi.png")
+img = PhotoImage(file='icon/bootesicon3.png')
 logo = Label(my_label, image=img, bg='#313131')
 logo.grid(column=0, row=0)
 head = Label(my_label,
