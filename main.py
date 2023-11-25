@@ -63,7 +63,7 @@ img = PhotoImage(file='icon/bootesicon3.png')
 logo = Label(my_label, image=img, bg='#313131')
 logo.grid(column=0, row=0)
 head = Label(my_label,
-    text='Estação monitoramento',
+    text='Estação de Monitoramento',
     bg= '#313131',
     fg='#27A436',
     font=('Nunito', 35, 'bold')
