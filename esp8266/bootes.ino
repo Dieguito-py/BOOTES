@@ -26,6 +26,9 @@ const char* password = "Pass"; //Pass
 
 ESP8266WebServer server(80);
 
+const float defaultLatitude = -Latitude padrão; // Latitude padrão
+const float defaultLongitude = -Longitude padrão; // Longitude padrão
+
 void setup() {
   gpsSerial.begin(9600);
   dht.setup(14, DHTesp::DHT11); // D5
@@ -80,12 +83,17 @@ void handleGetPressure() {
 }
 
 void handleGps() {
-  if (gps.location.isUpdated()) {
+  if (gps.location.isValid()) {
     double lat = gps.location.lat();
     double lng = gps.location.lng();
-    latStr = String(lat, 6);
-    lngStr = String(lng, 6);
-    server.send(200, "text/html", latStr + "e" + lngStr);
+    String latstr = String(lat, 6);
+    String lngstr = String(lng, 6);
+    server.send(200, "text/html", latstr + "e" + lngstr);
+  } else {
+    // Se não houver dados válidos do GPS, enviar as coordenadas padrão
+    String latstr = String(defaultLatitude, 6);
+    String lngstr = String(defaultLongitude, 6);
+    server.send(200, "text/html", latstr + "e" + lngstr);
   }
 }
 
