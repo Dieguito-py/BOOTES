@@ -21,8 +21,8 @@ float temperature = 0;
 float pressure = 0;
 float altitude = 0;
 
-const char* ssid = "Amarildo"; //SSID
-const char* password = "a2s4f7d22"; //Pass
+const char* ssid = "SSID"; //SSID
+const char* password = "Pass"; //Pass
 
 ESP8266WebServer server(80);
 
