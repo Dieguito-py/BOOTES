@@ -15,39 +15,49 @@ root.iconbitmap("icon/bootes.ico")
 root.configure(bg='#313131')
 
 def get_info():
-    # time.sleep(1)
-    resposta = requests.get('http://192.168.1.100/dados')
-    dados = resposta.text
-    dados_separados = dados.split("e")  
-    hum = str(dados_separados[1][0:4] + '%')
-    tmp = str(dados_separados[0][0:4] + ' °C')
-    pres = str(dados_separados[2] + ' atm')
-    altd = str(dados_separados[3]+ ' m')
-    humidade1.configure(text=hum)
-    temperatura1.configure(text=tmp)
-    press1.configure(text=pres)
-    alt1.configure(text=altd)
-    my_label3.after(5000, get_info)
-    print(hum)
-    print(tmp)
-    print(pres)
-    print(altd)
+    try:
+        resposta = requests.get('http://192.168.1.100/dados')
+        resposta.raise_for_status() 
+        dados = resposta.text
+        dados_separados = dados.split("e")
+        
+        if len(dados_separados) >= 4:
+            hum = str(dados_separados[1][0:4] + '%')
+            tmp = str(dados_separados[0][0:4] + ' °C')
+            pres = str(dados_separados[2] + ' atm')
+            altd = str(dados_separados[3]+ ' m')
+            humidade1.configure(text=hum)
+            temperatura1.configure(text=tmp)
+            press1.configure(text=pres)
+            alt1.configure(text=altd)
+            print(hum, tmp, pres, altd)
+        else:
+            print("Dados incompletos ou fora do formato esperado.")
+    except requests.RequestException as e:
+        print(f"Erro na requisição: {e}")
+    
+    root.after(5000, get_info)
 
 threading.Thread(target=get_info).start()
 
 def get_info2():
-    # time.sleep(1)
-    resposta2 = requests.get('http://192.168.1.100/gps')
-    dados2 = resposta2.text
-    dados_separados2 = dados2.split("e")  
-    lat = float(dados_separados2[1])
-    lng = float(dados_separados2[0])
-    map_widget2.set_position(lng, lat, text='cansat', marker=True)
-    map_widget2.after(20000, get_info2)
-    print(lat)
-    print(lng)
+    try:
+        resposta2 = requests.get('http://192.168.1.100/gps')
+        resposta2.raise_for_status() 
+        dados2 = resposta2.text
+        dados_separados2 = dados2.split("e")
+        lat = float(dados_separados2[1])
+        lng = float(dados_separados2[0])
+        map_widget2.set_position(lng, lat, text='cansat', marker=True)
+        print(lat, lng)
+    except (requests.RequestException, ValueError) as e:
+        print(f"Erro na requisição ou conversão de dados: {e}")
+    
+    root.after(20000, get_info2)
 
 threading.Thread(target=get_info2).start()
+
+#User Interface
 
 my_label = LabelFrame(root, width=1184, height=92, borderwidth=0, bg='#313131')
 my_label.pack(side=TOP, pady=30, padx=30)
