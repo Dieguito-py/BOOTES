@@ -53,7 +53,7 @@ def get_info2():
     except (requests.RequestException, ValueError) as e:
         print(f"Erro na requisição ou conversão de dados: {e}")
     
-    root.after(20000, get_info2)
+    root.after(60000, get_info2)
 
 threading.Thread(target=get_info2).start()
 
