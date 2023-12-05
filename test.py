@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkintermap import MapView
 
-class RealTimeLocationApp:
+class RealTimeLocationApp:   #just test
     def __init__(self, root):
         self.root = root
         self.root.title("Localização em Tempo Real")
